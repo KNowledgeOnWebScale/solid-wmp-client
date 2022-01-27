@@ -1,0 +1,1 @@
+export { WmpClient } from './client';

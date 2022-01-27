@@ -1,0 +1,23 @@
+{
+  "name": "solid-wmp-client",
+  "version": "1.0.0",
+  "author": "Thomas Dupont <thomas.dupont@ugent.be>",
+  "description": "Interface with a component implementing the Web Monetization Provider spec.",
+  "repository": "https://github.com/KNowledgeOnWebScale/solid-wmp-client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "/dist"
+  ],
+  "devDependencies": {
+    "@types/sockjs-client": "^1.5.1",
+    "@types/uuid": "^8.3.4",
+    "types-wm": "^1.1.0"
+  },
+  "dependencies": {
+    "sockjs-client": "^1.5.2",
+    "uuid": "^8.3.2"
+  }
+}
