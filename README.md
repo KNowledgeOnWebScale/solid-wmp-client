@@ -38,7 +38,7 @@ Construct a WmpClient instance:
 ```typescript
 val wmpClient = new WmpClient();
 ```  
-
+You can now freely use this wmpClient instance.
 
 #### setupPayment(wmpUri: string, fetchFunction?: (url: RequestInfo, init?: RequestInit | undefined) => Promise<Response>): void
 
