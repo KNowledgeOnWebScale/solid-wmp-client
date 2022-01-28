@@ -34,12 +34,6 @@
 <a href="#setuppaymentwmpuri-string-fetchfunction-url-requestinfo-init-requestinit--undefined-gt-promise-void" id="setuppaymentwmpuri-string-fetchfunction-url-requestinfo-init-requestinit--undefined-gt-promise-void" style="color: inherit; text-decoration: none;">
   <h4>setupPayment(wmpUri: string, fetchFunction?: (url: RequestInfo, init?: RequestInit | undefined) =&gt; Promise<Response>): void</h4>
 </a>
-<p>Instruct Web Monetization Provider to initiate a payment.</p>
-<p>This will first check if the document.monetization.state property is <code>&#39;pending&#39;</code> or <code>&#39;stopped&#39;</code>.</p>
-<p>Next it will request the payment pointer as found in the meta tag and do a POST to the Web Monetization Provider Uri (<code>wmpUri</code>)
-with query path <code>/api/me/sessions</code>. On creation of a session, the sessionId will be returned. </p>
-<p>That ID will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.</p>
-<p>Event listeners are set up, to broadcast the proper events on the document.monetization EventSource object.</p>
 <table>
 <thead>
 <tr>
@@ -56,6 +50,12 @@ with query path <code>/api/me/sessions</code>. On creation of a session, the ses
 <td>Optional fetch function (that has authentication headers preconfigures for instance)</td>
 </tr>
 </tbody></table>
+<p>Instruct Web Monetization Provider to initiate a payment.</p>
+<p>This will first check if the document.monetization.state property is <code>&#39;pending&#39;</code> or <code>&#39;stopped&#39;</code>.</p>
+<p>Next it will request the payment pointer as found in the meta tag and do a POST to the Web Monetization Provider Uri (<code>wmpUri</code>)
+with query path <code>/api/me/sessions</code>. On creation of a session, the sessionId will be returned. </p>
+<p>That ID will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.</p>
+<p>Event listeners are set up, to broadcast the proper events on the document.monetization EventSource object.</p>
 
 <a href="#closemonetizationstream" id="closemonetizationstream" style="color: inherit; text-decoration: none;">
   <h4>closeMonetizationStream()</h4>
@@ -73,6 +73,7 @@ with query path <code>/api/me/sessions</code>. On creation of a session, the ses
 <p>Get a MonetizaionHandler instance from an existing WmpClient instance:</p>
 <pre><code class="language-typescript"><span class="hl-2">val</span><span class="hl-0"> </span><span class="hl-2">wmpClient</span><span class="hl-0"> = </span><span class="hl-4">new</span><span class="hl-0"> </span><span class="hl-5">WmpClient</span><span class="hl-0">();</span><br/><span class="hl-2">val</span><span class="hl-0"> </span><span class="hl-2">monetizationHandler</span><span class="hl-0"> = </span><span class="hl-2">wmpClient</span><span class="hl-0">.</span><span class="hl-5">getMonetizationHandler</span><span class="hl-0">();</span>
 </code></pre>
+<p>You can now freely use this monetizationHandler instance.</p>
 
 <a href="#ismonetizationsupported-boolean" id="ismonetizationsupported-boolean" style="color: inherit; text-decoration: none;">
   <h4><strong>isMonetizationSupported(): boolean</strong></h4>
@@ -112,8 +113,6 @@ Fires proper events.</p>
 <a href="#firepaymentstoppedfinalized-boolean-void-internal-use" id="firepaymentstoppedfinalized-boolean-void-internal-use" style="color: inherit; text-decoration: none;">
   <h4><strong>firePaymentStopped(finalized: boolean): void</strong> <em>(internal use)</em></h4>
 </a>
-<p>Payment stream stopped.
-Fires proper events.</p>
 <table>
 <thead>
 <tr>
@@ -126,12 +125,12 @@ Fires proper events.</p>
 <td>True when meta tag was removed or payment pointer changed</td>
 </tr>
 </tbody></table>
+<p>Payment stream stopped.
+Fires proper events.</p>
 
 <a href="#firepaymentprogressevt-messageevent-void-internal-use" id="firepaymentprogressevt-messageevent-void-internal-use" style="color: inherit; text-decoration: none;">
   <h4><strong>firePaymentProgress(evt: MessageEvent): void</strong> <em>(internal use)</em></h4>
 </a>
-<p>Payment busy, report progress.
-Fires proper events.</p>
 <table>
 <thead>
 <tr>
@@ -144,4 +143,6 @@ Fires proper events.</p>
 <td>The event to parse the <code>data</code> property from</td>
 </tr>
 </tbody></table>
+<p>Payment busy, report progress.
+Fires proper events.</p>
 </div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/MonetizationHandler.html" class="tsd-kind-icon">Monetization<wbr/>Handler</a></li><li class="tsd-kind-class"><a href="classes/WmpClient.html" class="tsd-kind-icon">Wmp<wbr/>Client</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
