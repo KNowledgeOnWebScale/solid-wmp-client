@@ -3,8 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 
 /**
  * Fetch this class from your WmpClient object, instead of instantiating it yourself!
- * <br>
- * `myWmpClient.getMonetizationHandler()`
+ * 
+ * ```ts
+ * myWmpClient.getMonetizationHandler()
+ * ```
  */
 export class MonetizationHandler {
     private wm: Monetization
@@ -24,7 +26,7 @@ export class MonetizationHandler {
     }
 
     /**
-     * Is Web Monetization supported (document.monetization != undefined)
+     * Is Web Monetization supported (document.monetization != undefined)?
      */
     isMonetizationSupported(): boolean {
         return this.wm != undefined && this.wm != null;
@@ -189,6 +191,10 @@ export class MonetizationHandler {
         }
     }
 
+
+    /**
+     * Resets the paymnet pointer back to null.
+     */
     private resetPaymentPointer() {
         if (this.paymentPointer != null) {
             this.firePaymentStopped(true);
