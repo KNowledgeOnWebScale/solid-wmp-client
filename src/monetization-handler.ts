@@ -33,10 +33,11 @@ export class MonetizationHandler {
     }
 
     /**
-     * Checks the document.monetization.state property for a 'pending' or 'stopped' state.
-     * @returns True if state property is defined and not 'started'
+     * Checks the document.monetization.state property for a `'pending'` or `'stopped'` state.
+     * @returns True if state property is defined and not `'started'`
+     * @throws If state is not one of `'pending'`, `'stopped'` or `'started'`
      */
-    isReadyForPayment() {
+    isReadyForPayment(): boolean {
         if (this.wm.state != 'pending' && this.wm.state != 'stopped' && this.wm.state != 'started') {
             throw new Error('No meta[name="monetization"] tag found!')
         } else {
@@ -123,7 +124,7 @@ export class MonetizationHandler {
      * Returns wether the document.monetization.state equals 'started'
      * @returns True if state equals 'started'
      */
-    isStarted() {
+    isStarted(): boolean {
         return this.wm.state == 'started';
     }
 
@@ -131,7 +132,7 @@ export class MonetizationHandler {
      * Returns wether the document.monetization.state equals 'stopped'
      * @returns True if state equals 'stopped'
      */
-    isStopped() {
+    isStopped(): boolean {
         return this.wm.state == 'stopped';
     }
 
@@ -139,7 +140,7 @@ export class MonetizationHandler {
      * Returns wether the document.monetization.state equals 'pending'
      * @returns True if state equals 'pending'
      */
-    isPending() {
+    isPending(): boolean {
         return this.wm.state == 'pending';
     }
 
@@ -171,7 +172,7 @@ export class MonetizationHandler {
      * Sends a monetizationprogress event from the monetization event source.
      * @param detail The details to be sent with the event.
      */
-    sendProgressEvent(detail: MonetizationProgressEventDetail) {
+    private sendProgressEvent(detail: MonetizationProgressEventDetail) {
         this.wm.dispatchEvent(new CustomEvent('monetizationprogress', { detail }));
     }
 
@@ -206,7 +207,7 @@ export class MonetizationHandler {
     /**
     * Monetization meta tag found, no payments sent yet
     */
-    wmPending() {
+    private wmPending() {
         const detail = {
             paymentPointer: this.paymentPointer,
             requestId: this.monetizationId
@@ -219,7 +220,7 @@ export class MonetizationHandler {
      * Payment stream started, first payment sent.
      * Fires proper events.
      */
-    firePaymentStarted() {
+    firePaymentStarted(): void {
         const detail = {
             paymentPointer: this.paymentPointer,
             requestId: this.monetizationId,
@@ -232,7 +233,7 @@ export class MonetizationHandler {
      * Fires proper events.
      * @param finalized True when meta tag was removed or payment pointer changed
      */
-    firePaymentStopped(finalized: boolean) {
+    firePaymentStopped(finalized: boolean): void {
         const detail = {
             paymentPointer: this.paymentPointer,
             requestId: this.monetizationId,
@@ -244,9 +245,9 @@ export class MonetizationHandler {
     /**
      * Payment busy, report progress.
      * Fires proper events.
-     * @param evt 
+     * @param evt The event to parse the `data` property from
      */
-    firePaymentProgress(evt: MessageEvent) {
+    firePaymentProgress(evt: MessageEvent): void {
         const data = JSON.parse(evt.data);
         const detail = {
             paymentPointer: this.paymentPointer,

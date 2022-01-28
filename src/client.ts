@@ -25,7 +25,7 @@ export class WmpClient {
     }
 
     /**
-     * Instruct Web Monetization Provider to initiate a payment
+     * Instruct Web Monetization Provider to initiate a payment.
      * 
      * This will first check if the document.monetization.state property is `'pending'` or `'stopped'`.
      * 
@@ -35,14 +35,17 @@ export class WmpClient {
      * That ID will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.
      * 
      * Event listeners are set up, to broadcast the proper events on the document.monetization EventSource object.
+     * 
+     * @param wmpUrl The URL of the Web Monetization Provider
+     * @param fetchFunction Optional fetch function (that has authentication headers preconfigures for instance)
      */
-    setupPayment(wmpUri: string, fetchFunction?: (url: RequestInfo, init?: RequestInit | undefined) => Promise<Response>) {
+    setupPayment(wmpUrl: string, fetchFunction?: (url: RequestInfo, init?: RequestInit | undefined) => Promise<Response>): void {
         if (this.monetizationHandler.isReadyForPayment()) {
             // Get request Id
             const body = JSON.stringify({ targetPaymentPointer: this.monetizationHandler.paymentPointer })
             const method = 'POST';
             const fetch = fetchFunction || window.fetch;
-            fetch(`${wmpUri}/api/me/sessions`, { method, body })
+            fetch(`${wmpUrl}/api/me/sessions`, { method, body })
                 .then(res => res.json())
                 .then(
                     res => setupWebSocket(res.sessionId),
@@ -54,7 +57,7 @@ export class WmpClient {
                     this.socket.close();
                     this.socket = null;
                 }
-                this.socket = new SockJS(`${wmpUri}/api/me/sessions/${id}/channel`);
+                this.socket = new SockJS(`${wmpUrl}/api/me/sessions/${id}/channel`);
                 this.socket.onopen = evt => this.monetizationHandler.firePaymentStarted();
                 this.socket.onmessage = evt => this.monetizationHandler.firePaymentProgress(evt);
                 this.socket.onclose = evt => this.monetizationHandler.firePaymentStopped(false);
