@@ -27,7 +27,7 @@ import { WmpClient } from 'solid-wmp-client';
 
 val wmpClient = new WmpClient();
 val monetizationHelper = wmpClient.getMonetizationHandler();
-```
+```  
 
 ## API
 
@@ -37,9 +37,15 @@ Construct a WmpClient instance:
 
 ```typescript
 val wmpClient = new WmpClient();
-```
+```  
+
 
 #### setupPayment(wmpUri: string, fetchFunction?: (url: RequestInfo, init?: RequestInit | undefined) => Promise<Response>): void
+
+| argument   | description    |
+|----|----|
+| `wmpUrl` |The URL of the Web Monetization Provider|
+| `fetchFunction` | Optional fetch function (that has authentication headers preconfigures for instance) |  
 
 Instruct Web Monetization Provider to initiate a payment.
 
@@ -51,11 +57,6 @@ with query path `/api/me/sessions`. On creation of a session, the sessionId will
 That ID will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.
 
 Event listeners are set up, to broadcast the proper events on the document.monetization EventSource object.
-
-| argument   | description    |
-|----|----|
-| `wmpUrl` |The URL of the Web Monetization Provider|
-| `fetchFunction` | Optional fetch function (that has authentication headers preconfigures for instance) |
 
 #### closeMonetizationStream()
 
@@ -72,7 +73,9 @@ Get a MonetizaionHandler instance from an existing WmpClient instance:
 ```typescript
 val wmpClient = new WmpClient();
 val monetizationHandler = wmpClient.getMonetizationHandler();
-```
+```  
+
+You can now freely use this monetizationHandler instance.
 
 #### **isMonetizationSupported(): boolean**
 
@@ -104,18 +107,19 @@ Fires proper events.
 
 #### **firePaymentStopped(finalized: boolean): void** _(internal use)_
 
+| argument   | description    |
+|----|----|
+| finalized | True when meta tag was removed or payment pointer changed |  
+
 Payment stream stopped.
 Fires proper events.
 
-| argument   | description    |
-|----|----|
-| finalized | True when meta tag was removed or payment pointer changed |
 
 #### **firePaymentProgress(evt: MessageEvent): void** _(internal use)_
 
-Payment busy, report progress.
-Fires proper events.
-
 | argument   | description    |
 |----|----|
-| evt | The event to parse the `data` property from |
+| evt | The event to parse the `data` property from |  
+
+Payment busy, report progress.
+Fires proper events.
