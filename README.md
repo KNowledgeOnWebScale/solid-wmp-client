@@ -31,6 +31,8 @@ val monetizationHelper = wmpClient.getMonetizationHandler();
 
 ## API
 
+Full api docs at [https://knowledgeonwebscale.github.io/solid-wmp-client/](https://knowledgeonwebscale.github.io/solid-wmp-client/).
+
 ### WmpClient
 
 Construct a WmpClient instance:
