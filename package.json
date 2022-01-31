@@ -1,6 +1,6 @@
 {
   "name": "solid-wmp-client",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "Thomas Dupont <thomas.dupont@ugent.be>",
   "description": "Interface with a component implementing the Web Monetization Provider spec.",
   "repository": "https://github.com/KNowledgeOnWebScale/solid-wmp-client",
