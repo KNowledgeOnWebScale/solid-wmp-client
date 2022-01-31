@@ -1,4 +1,5 @@
 import * as SockJS from 'sockjs-client';
+import * as LinkParser from 'http-link-header';
 import { MonetizationHandler } from './monetization-handler';
 
 /**
@@ -45,25 +46,32 @@ export class WmpClient {
             const body = JSON.stringify({ targetPaymentPointer: this.monetizationHandler.paymentPointer })
             const method = 'POST';
             const fetch = fetchFunction || window.fetch;
+
             fetch(`${wmpUrl}/api/me/sessions`, { method, body })
-                .then(res => res.json())
+                .then(res => fetch(res.headers.get('location')))        // GET location header
+                .then(res => LinkParser.parse(res.headers.get("link"))) // parse link header
+                .then(link => link.rel('channel')[0])                   // get channel rel attribute
                 .then(
-                    res => setupWebSocket(res.sessionId),
+                    uri => setupWebSocket(uri?.uri),
                     err => console.error(err)
                 )
 
-            const setupWebSocket = (id: string) => {
+            const setupWebSocket = (uri?: string) => {
+                if (!uri) {
+                    throw new Error('Cannot open websocket: no URI!')
+                }
                 if (this.socket) {
                     this.socket.close();
                     this.socket = null;
                 }
-                this.socket = new SockJS(`${wmpUrl}/api/me/sessions/${id}/channel`);
+                this.socket = new SockJS(`${uri}`);
                 this.socket.onopen = evt => this.monetizationHandler.firePaymentStarted();
                 this.socket.onmessage = evt => this.monetizationHandler.firePaymentProgress(evt);
                 this.socket.onclose = evt => this.monetizationHandler.firePaymentStopped(false);
             }
         }
     }
+
 
     /**
      * Close the current monetization stream, if one is open.

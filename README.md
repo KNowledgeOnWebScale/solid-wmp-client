@@ -1,6 +1,6 @@
 # Solid WMP Client
 
-This is a client side typescrit/javascript library for interfacing with a component that follows the [Web Monetization Provider draft specification](https://knowledgeonwebscale.github.io/solid-web-monetization/specs.html).
+This is a client side typescript/javascript library for interfacing with a component that follows the [Web Monetization Provider draft specification](https://knowledgeonwebscale.github.io/solid-web-monetization/specs.html).
 
 ## Usage
 

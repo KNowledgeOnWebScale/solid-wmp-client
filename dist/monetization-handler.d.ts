@@ -1,8 +1,9 @@
-import { MonetizationProgressEventDetail } from 'types-wm';
 /**
  * Fetch this class from your WmpClient object, instead of instantiating it yourself!
- * <br>
- * `myWmpClient.getMonetizationHandler()`
+ *
+ * ```ts
+ * myWmpClient.getMonetizationHandler()
+ * ```
  */
 export declare class MonetizationHandler {
     private wm;
@@ -10,12 +11,13 @@ export declare class MonetizationHandler {
     monetizationId: string | null;
     constructor();
     /**
-     * Is Web Monetization supported (document.monetization != undefined)
+     * Is Web Monetization supported (document.monetization != undefined)?
      */
     isMonetizationSupported(): boolean;
     /**
-     * Checks the document.monetization.state property for a 'pending' or 'stopped' state.
-     * @returns True if state property is defined and not 'started'
+     * Checks the document.monetization.state property for a `'pending'` or `'stopped'` state.
+     * @returns True if state property is defined and not `'started'`
+     * @throws If state is not one of `'pending'`, `'stopped'` or `'started'`
      */
     isReadyForPayment(): boolean;
     /**
@@ -56,17 +58,20 @@ export declare class MonetizationHandler {
      * Sends a monetizationprogress event from the monetization event source.
      * @param detail The details to be sent with the event.
      */
-    sendProgressEvent(detail: MonetizationProgressEventDetail): void;
+    private sendProgressEvent;
     /**
      * Sets a new payment pointer string and generates a unique (uuid v4) monetizationId.
      * @param pointer The new payment pointer string
      */
     private setPaymentPointer;
+    /**
+     * Resets the paymnet pointer back to null.
+     */
     private resetPaymentPointer;
     /**
     * Monetization meta tag found, no payments sent yet
     */
-    wmPending(): void;
+    private wmPending;
     /**
      * Payment stream started, first payment sent.
      * Fires proper events.
@@ -81,7 +86,7 @@ export declare class MonetizationHandler {
     /**
      * Payment busy, report progress.
      * Fires proper events.
-     * @param evt
+     * @param evt The event to parse the `data` property from
      */
     firePaymentProgress(evt: MessageEvent): void;
 }

@@ -1,8 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
 /**
  * Fetch this class from your WmpClient object, instead of instantiating it yourself!
- * <br>
- * `myWmpClient.getMonetizationHandler()`
+ *
+ * ```ts
+ * myWmpClient.getMonetizationHandler()
+ * ```
  */
 export class MonetizationHandler {
     constructor() {
@@ -17,14 +19,15 @@ export class MonetizationHandler {
         this.startDetection();
     }
     /**
-     * Is Web Monetization supported (document.monetization != undefined)
+     * Is Web Monetization supported (document.monetization != undefined)?
      */
     isMonetizationSupported() {
         return this.wm != undefined && this.wm != null;
     }
     /**
-     * Checks the document.monetization.state property for a 'pending' or 'stopped' state.
-     * @returns True if state property is defined and not 'started'
+     * Checks the document.monetization.state property for a `'pending'` or `'stopped'` state.
+     * @returns True if state property is defined and not `'started'`
+     * @throws If state is not one of `'pending'`, `'stopped'` or `'started'`
      */
     isReadyForPayment() {
         if (this.wm.state != 'pending' && this.wm.state != 'stopped' && this.wm.state != 'started') {
@@ -165,6 +168,9 @@ export class MonetizationHandler {
             this.wmPending();
         }
     }
+    /**
+     * Resets the paymnet pointer back to null.
+     */
     resetPaymentPointer() {
         if (this.paymentPointer != null) {
             this.firePaymentStopped(true);
@@ -209,7 +215,7 @@ export class MonetizationHandler {
     /**
      * Payment busy, report progress.
      * Fires proper events.
-     * @param evt
+     * @param evt The event to parse the `data` property from
      */
     firePaymentProgress(evt) {
         const data = JSON.parse(evt.data);
