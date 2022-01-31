@@ -2,7 +2,7 @@
 <a href="#solid-wmp-client" id="solid-wmp-client" style="color: inherit; text-decoration: none;">
   <h1>Solid WMP Client</h1>
 </a>
-<p>This is a client side typescrit/javascript library for interfacing with a component that follows the <a href="https://knowledgeonwebscale.github.io/solid-web-monetization/specs.html">Web Monetization Provider draft specification</a>.</p>
+<p>This is a client side typescript/javascript library for interfacing with a component that follows the <a href="https://knowledgeonwebscale.github.io/solid-web-monetization/specs.html">Web Monetization Provider draft specification</a>.</p>
 
 <a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
   <h2>Usage</h2>
@@ -55,8 +55,9 @@
 <p>Instruct Web Monetization Provider to initiate a payment.</p>
 <p>This will first check if the document.monetization.state property is <code>&#39;pending&#39;</code> or <code>&#39;stopped&#39;</code>.</p>
 <p>Next it will request the payment pointer as found in the meta tag and do a POST to the Web Monetization Provider Uri (<code>wmpUri</code>)
-with query path <code>/api/me/sessions</code>. On creation of a session, the sessionId will be returned. </p>
-<p>That ID will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.</p>
+with query path <code>/api/me/sessions</code>. On creation of a session, the session URI will be returned in the Location header. </p>
+<p>We will GET the uri and read the Link header, searching for the <code>channel</code> <code>rel</code> attribute.</p>
+<p>That channel URI will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.</p>
 <p>Event listeners are set up, to broadcast the proper events on the document.monetization EventSource object.</p>
 
 <a href="#closemonetizationstream" id="closemonetizationstream" style="color: inherit; text-decoration: none;">
