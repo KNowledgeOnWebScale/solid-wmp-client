@@ -54,10 +54,12 @@ Instruct Web Monetization Provider to initiate a payment.
 This will first check if the document.monetization.state property is `'pending'` or `'stopped'`.
 
 Next it will request the payment pointer as found in the meta tag and do a POST to the Web Monetization Provider Uri (`wmpUri`)
-with query path `/api/me/sessions`. On creation of a session, the sessionId will be returned. 
+with query path `/api/me/sessions`. On creation of a session, the session URI will be returned in the Location header. 
 
-That ID will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.
+We will GET the uri and read the Link header, searching for the `channel` `rel` attribute.
 
+That channel URI will then be used to open an WebSocket channel (using SockJS) to start the micropayments and receive events on the progress.
+ 
 Event listeners are set up, to broadcast the proper events on the document.monetization EventSource object.
 
 #### closeMonetizationStream()
