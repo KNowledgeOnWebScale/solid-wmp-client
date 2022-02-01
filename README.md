@@ -1,5 +1,7 @@
 # Solid WMP Client
 
+[![npm version](https://badge.fury.io/js/solid-wmp-client.svg)](https://www.npmjs.com/package/solid-wmp-client)
+
 This is a client side typescript/javascript library for interfacing with a component that follows the [Web Monetization Provider draft specification](https://knowledgeonwebscale.github.io/solid-web-monetization/specs.html).
 
 ## Usage
